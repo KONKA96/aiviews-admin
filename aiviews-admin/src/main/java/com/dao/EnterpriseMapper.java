@@ -1,5 +1,7 @@
 package com.dao;
 
+import java.util.List;
+
 import com.model.Enterprise;
 
 public interface EnterpriseMapper {
@@ -14,4 +16,6 @@ public interface EnterpriseMapper {
     int updateByPrimaryKeySelective(Enterprise record);
 
     int updateByPrimaryKey(Enterprise record);
+    
+    List<Enterprise> selectAllEnterprise(Enterprise enterprise);
 }

@@ -79,4 +79,18 @@
       url_name = #{urlName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="selectAllEnterprise" parameterType="Enterprise" resultType="Enterprise">
+  	select
+  		 id, enterprise_name, realm_name, url_name
+  	from enterprise
+  	<where>
+  		<if test="id!=null">
+  			and id=#{id}
+  		</if>
+  		<if test="enterpriseName!='' and enterpriseName!=null">
+  			and enterprise_name=#{enterpriseName}
+  		</if>
+  	</where>
+  </select>
 </mapper>
