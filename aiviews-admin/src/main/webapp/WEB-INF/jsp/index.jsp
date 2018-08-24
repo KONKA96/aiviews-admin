@@ -52,9 +52,27 @@
 					<!-- 左側菜單開始 -->
 						<!--  -->
 			                <li>
-				               <a class="J_menuItem" href="/">
+				               <a class="J_menuItem" href="/aiviews-admin/enterprise/selectTeacher">
 				                   	<i class="fa fa-columns"></i> 
-				                   	<span class="nav-label"></span>
+				                   	<span class="nav-label">教师管理</span>
+				                   </a>
+			                </li>
+			                <li>
+				               <a class="J_menuItem" href="/aiviews-admin/enterprise/selectStudent">
+				                   	<i class="fa fa-columns"></i> 
+				                   	<span class="nav-label">学生管理</span>
+				                   </a>
+			                </li>
+			                <li>
+				               <a class="J_menuItem" href="/aiviews-admin/enterprise/selectAdmin">
+				                   	<i class="fa fa-columns"></i> 
+				                   	<span class="nav-label">管理员管理</span>
+				                   </a>
+			                </li>
+			                <li>
+				               <a class="J_menuItem" href="/aiviews-admin/enterprise/selectScreen">
+				                   	<i class="fa fa-columns"></i> 
+				                   	<span class="nav-label">屏幕管理</span>
 				                   </a>
 			                </li>
                     <!-- 左侧菜单结束 -->

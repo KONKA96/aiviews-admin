@@ -29,6 +29,10 @@ public class Student {
 
     private Integer groupId;
     
+    private Subject subject;
+    
+    private Group group;
+    
     private int role;
     
     private String sessionId;
@@ -57,6 +61,22 @@ public class Student {
 		this.role = role;
 	}
     
+	public Subject getSubject() {
+		return subject;
+	}
+
+	public void setSubject(Subject subject) {
+		this.subject = subject;
+	}
+
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
+	}
+	
     public String getId() {
 		return id;
 	}
@@ -160,4 +180,14 @@ public class Student {
     public void setGroupId(Integer groupId) {
         this.groupId = groupId;
     }
+
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", username=" + username + ", password=" + password + ", openId=" + openId
+				+ ", truename=" + truename + ", nickname=" + nickname + ", sex=" + sex + ", telephone=" + telephone
+				+ ", email=" + email + ", subjectId=" + subjectId + ", duration=" + duration + ", time=" + time
+				+ ", remake=" + remake + ", groupId=" + groupId + ", subject=" + subject + ", group=" + group
+				+ ", role=" + role + ", sessionId=" + sessionId + "]";
+	}
+
 }

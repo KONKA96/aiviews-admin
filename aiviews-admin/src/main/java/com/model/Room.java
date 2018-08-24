@@ -13,6 +13,16 @@ public class Room {
 	
 	private List<Screen> screenList;
 	
+	private Building building;
+	
+	public Building getBuilding() {
+		return building;
+	}
+
+	public void setBuilding(Building building) {
+		this.building = building;
+	}
+
 	public List<Screen> getScreenList() {
 		return screenList;
 	}
@@ -52,4 +62,11 @@ public class Room {
     public void setDesc(String desc) {
         this.desc = desc == null ? null : desc.trim();
     }
+
+	@Override
+	public String toString() {
+		return "Room [id=" + id + ", num=" + num + ", buildingId=" + buildingId + ", desc=" + desc + ", screenList="
+				+ screenList + ", building=" + building + "]";
+	}
+    
 }

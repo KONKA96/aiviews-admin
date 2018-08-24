@@ -25,6 +25,36 @@ public class Admin {
 
     private Integer screenRemain;
 	
+	private List<Building> buildingList;
+	
+	private List<Faculty> facultyList;
+	
+	private List<Admin> adminList;
+	
+	public List<Admin> getAdminList() {
+		return adminList;
+	}
+
+	public void setAdminList(List<Admin> adminList) {
+		this.adminList = adminList;
+	}
+
+	public List<Building> getBuildingList() {
+		return buildingList;
+	}
+
+	public void setBuildingList(List<Building> buildingList) {
+		this.buildingList = buildingList;
+	}
+
+	public List<Faculty> getFacultyList() {
+		return facultyList;
+	}
+
+	public void setFacultyList(List<Faculty> facultyList) {
+		this.facultyList = facultyList;
+	}
+
     public Integer getId() {
         return id;
     }
@@ -117,7 +147,9 @@ public class Admin {
 	public String toString() {
 		return "Admin [id=" + id + ", username=" + username + ", password=" + password + ", truename=" + truename
 				+ ", sex=" + sex + ", telephone=" + telephone + ", email=" + email + ", power=" + power + ", higherId="
-				+ higherId + ", screenNum=" + screenNum + ", screenRemain=" + screenRemain + "]";
+				+ higherId + ", screenNum=" + screenNum + ", screenRemain=" + screenRemain + ", buildingList="
+				+ buildingList + ", facultyList=" + facultyList + ", adminList=" + adminList + "]";
 	}
+    
     
 }

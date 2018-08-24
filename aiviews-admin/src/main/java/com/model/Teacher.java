@@ -29,6 +29,8 @@ public class Teacher {
 
     private String remake;
 	
+	private Subject subject;
+	
 	private String sessionId;
 	
 	private String openId;
@@ -59,6 +61,14 @@ public class Teacher {
 		this.sessionId = sessionId;
 	}
 
+	public Subject getSubject() {
+		return subject;
+	}
+
+	public void setSubject(Subject subject) {
+		this.subject = subject;
+	}
+	
     public String getId() {
 		return id;
 	}
@@ -171,4 +181,56 @@ public class Teacher {
         this.remake = remake == null ? null : remake.trim();
     }
 
+	@Override
+	public String toString() {
+		return "Teacher [id=" + id + ", username=" + username + ", password=" + password + ", truename=" + truename
+				+ ", nickname=" + nickname + ", sex=" + sex + ", telephone=" + telephone + ", email=" + email + ", job="
+				+ job + ", subjectId=" + subjectId + ", screenNumSametime=" + screenNumSametime + ", duration="
+				+ duration + ", times=" + times + ", remake=" + remake + ", subject=" + subject + ", sessionId="
+				+ sessionId + ", role=" + role + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((subjectId == null) ? 0 : subjectId.hashCode());
+		result = prime * result + ((telephone == null) ? 0 : telephone.hashCode());
+		result = prime * result + ((truename == null) ? 0 : truename.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Teacher other = (Teacher) obj;
+		if (subjectId == null) {
+			if (other.subjectId != null)
+				return false;
+		} else if (!subjectId.equals(other.subjectId))
+			return false;
+		if (telephone == null) {
+			if (other.telephone != null)
+				return false;
+		} else if (!telephone.equals(other.telephone))
+			return false;
+		if (truename == null) {
+			if (other.truename != null)
+				return false;
+		} else if (!truename.equals(other.truename))
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
+	}
+    
 }
