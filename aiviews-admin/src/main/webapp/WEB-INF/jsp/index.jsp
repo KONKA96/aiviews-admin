@@ -75,6 +75,12 @@
 				                   	<span class="nav-label">屏幕管理</span>
 				                   </a>
 			                </li>
+			                <li>
+				               <a class="J_menuItem" href="/aiviews-admin/enterprise/selectRecord">
+				                   	<i class="fa fa-columns"></i> 
+				                   	<span class="nav-label">使用记录查询</span>
+				                   </a>
+			                </li>
                     <!-- 左侧菜单结束 -->
                 </ul>
             </div>
