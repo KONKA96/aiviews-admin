@@ -12,7 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.httpsFile.FileTransferClient;
 import com.model.Admin;
 import com.model.Enterprise;
@@ -22,7 +25,6 @@ import com.model.Screen;
 import com.model.Student;
 import com.model.Teacher;
 import com.service.EnterpriseService;
-import com.util.HttpsFileUtil;
 import com.util.HttpsUtil;
 import com.util.JsonUtils;
 import com.util.PageUtil;
@@ -47,9 +49,13 @@ public class EnterpriseController {
 	 * @return
 	 */
 	@RequestMapping("/selectAllEnterprise")
-	public String selectAllEnterprise(Enterprise enterprise,ModelMap modelMap) {
+	public String selectAllEnterprise(Enterprise enterprise,ModelMap modelMap,@RequestParam(required=false,defaultValue="1") Integer index,
+            @RequestParam(required=false,defaultValue="15") Integer pageSize,HttpServletRequest request) {
 		
-		List<Enterprise> enterpriseList = enterpriseService.selectAllEnterprise(enterprise);
+		PageHelper.startPage(index, pageSize);
+		Page<Enterprise> enterpriseList = (Page<Enterprise>) enterpriseService.selectAllEnterprise(enterprise);
+		pageUtil.setPageInfo(enterpriseList, index, pageSize,request);
+		
 		modelMap.put("enterpriseList", enterpriseList);
 		return "list-enterprise";
 	}
@@ -66,6 +72,41 @@ public class EnterpriseController {
 		
 		session.setAttribute("enterprise", enterprise);
 		return "index";
+	}
+	
+	/**
+	 * 跳转到修改、新增企业页面
+	 * @param enterprise
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping("/toEditEnterprise")
+	public String toEditEnterprise(Enterprise enterprise,ModelMap modelMap) {
+		enterprise=enterpriseService.selectByPrimaryKey(enterprise);
+		
+		modelMap.addAttribute("enterprise", enterprise);
+		return "/edit-enterprise";
+	}
+	
+	/**
+	 * 修改、新增企业
+	 * @param enterprise
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/updateEnterprise")
+	public String updateEnterprise(Enterprise enterprise) {
+		if(enterprise.getId()!=null) {
+			if(enterpriseService.updateByPrimaryKeySelective(enterprise)>0) {
+				return "success";
+			}
+		}else {
+			if(enterpriseService.insertSelective(enterprise)>0) {
+				return "success";
+			}
+		}
+		
+		return "";
 	}
 	
 	/**
@@ -96,7 +137,13 @@ public class EnterpriseController {
 		if(enterprise!=null) {
 			url=enterprise.getRealmName()+url;
 			/*String sendPost = HttpUtil.sendPost(url, params);*/
-			String httpsRequest = HttpsUtil.httpsRequest(url, "GET", params);
+			String httpsRequest = null;
+			try {
+				httpsRequest = HttpsUtil.httpsRequest(url, "GET", params);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			JSONObject jsonObject = JSONObject.fromObject(httpsRequest);
 			
 			List<Teacher> teacherList = JsonUtils.jsonToList(jsonObject.get("teacherList").toString(), Teacher.class);
@@ -255,6 +302,9 @@ public class EnterpriseController {
 			params = params + "&role="+record.getRole();
 		}else {
 			params = params + "&role=1";
+		}
+		if(record.getUsername()!=null && record.getUsername()!="") {
+			params = params + "&username="+record.getUsername();
 		}
 		
 		if(enterprise!=null) {

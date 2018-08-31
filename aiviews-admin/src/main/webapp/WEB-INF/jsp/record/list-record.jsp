@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 
@@ -28,12 +29,20 @@
                     <div class="ibox-content">
                     	<div  class="dataTables_wrapper form-inline" role="grid">
                     		<!-- 查询条件 -->
-	                    	<form method="post" id="searchForm" action="/aihudong-duoping-web/admin/showAllAdmin">
+	                    	<form method="post" id="searchForm" action="/aiviews-admin/enterprise/selectRecord">
 		                    	<div class="row">
 		                    		<div class="col-sm-10">
+		                    			<div class="input-group">
+			                    				<select class="form-control" name="role">
+			                    					<option value="1" ${record.role==1 ? 'selected' : '' }>教师</option>
+			                    					<option value="2" ${record.role==2 ? 'selected' : '' }>学生</option>
+			                    					<option value="4" ${record.role==4 ? 'selected' : '' }>屏幕</option>
+	                                    		</select>
+			                    			</div>
+		                    		
 		                    			<div class="input-group" style="float:right;">
-		                    				<!-- 真实姓名 -->
-				                            <input type="text" name="truename" value="${admin.truename }" class="form-control" placeholder="关键字查找">
+		                    				<!-- 用户名 -->
+				                            <input type="text" name="username" value="${record.username }" class="form-control" placeholder="关键字查找">
 				                            <div class="input-group-btn">
 				                                <input type="submit"  class="btn btn-primary" value="搜索">
 				                            </div>
@@ -57,21 +66,13 @@
 	                            		<tr class="gradeA">
 	                            			<td>${record.username }</td>
 	                            			<td>
-	                            				${record.startTime }
+	                            				<fmt:formatDate value="${record.startTime }" pattern="yyyy-MM-dd HH:mm:ss"/>
 		                            		 </td>
 		                            		 <td>
-		                            		 	${record.endTime }
+		                            		 	<fmt:formatDate value="${record.endTime }" pattern="yyyy-MM-dd HH:mm:ss"/>
 		                           			 </td>
 		                            		 <td>${record.screenId }</td>
 			                                 <td>
-			                                 	<c:if test="${admin.power== 1}"><a href="javascript:;"
-												onclick="addFaculty(${admin.id});"><i
-													style="margin-left: 5px;" class="fa fa-diamond"></i></a></c:if>
-			                                 	 <c:if test="${admin.power== 2}"><a href="javascript:;"
-												onclick="addBuilding(${admin.id});"><i
-													style="margin-left: 5px;" class="fa fa-diamond"></i></a></c:if>
-			                                 	<a href="/aihudong-duoping-web/admin/toUpdateAdmin?id=${admin.id }"><i style="margin-left:5px;" class="fa fa-edit"></i></a>
-			                                 	<a href="javascript:;" onclick="deleteAdmin(${admin.id })"><i style="margin-left:5px;" class="fa fa-trash"></i></a>
 			                                 </td>
 		                            	</tr>
 		                            </c:forEach>

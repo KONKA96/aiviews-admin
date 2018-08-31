@@ -8,7 +8,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>学生管理</title>
+    <title>企业管理</title>
     <jsp:include page="common/include_css.jsp" />
 </head>
 
@@ -18,7 +18,7 @@
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5><small>学生管理</small></h5>
+                        <h5><small>企业管理</small></h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -32,7 +32,7 @@
 		                    	<div class="row">
 		                    		<div class="col-sm-2">
 		                    			<div class="dataTables_length">
-		                    				<a href="/aihudong-duoping-web/student/toUpdate" class="btn btn-primary ">新增</a>
+		                    				<a href="/aiviews-admin/enterprise/toEditEnterprise" class="btn btn-primary ">新增</a>
 		                    			</div>
 		                    		</div>
 		                    		<div class="col-sm-10">
@@ -63,7 +63,8 @@
 		                            		 <td>${enterprise.enterpriseName }</td>
 		                            		 <td>${enterprise.realmName }</td>
 			                                 <td>
-			                                 	<a href="/aiviews-admin/enterprise/showEnterpriseDetail?id=${enterprise.id }"><i style="margin-left:5px;" class="fa fa-edit"></i></a>
+			                                 	<a href="/aiviews-admin/enterprise/showEnterpriseDetail?id=${enterprise.id }"><i style="margin-left:5px;" class="fa fa-eye"></i></a>
+			                                 	<a href="/aiviews-admin/enterprise/toEditEnterprise?id=${enterprise.id }"><i style="margin-left:5px;" class="fa fa-edit"></i></a>
 			                                 	<a href="javascript:;" onclick="deleteStudent('${student.id }')"><i style="margin-left:5px;" class="fa fa-trash"></i></a>
 			                                 </td>
 		                            	</tr>
