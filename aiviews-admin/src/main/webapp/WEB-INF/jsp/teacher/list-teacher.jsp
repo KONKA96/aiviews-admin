@@ -111,7 +111,7 @@
 				success:function(data){
 					if(data=='success'){
 						alert("操作成功！");
-						window.location="/aihudong-duoping-web/teacher/showAllTeacher";
+						window.location="/aiviews-admin/enterprise/selectTeacher";
 					}else{
 						alert("操作失败");
 					}

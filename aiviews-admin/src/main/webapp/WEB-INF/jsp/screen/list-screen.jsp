@@ -30,89 +30,18 @@
 					<div class="ibox-content">
 						<div class="dataTables_wrapper form-inline" role="grid">
 							<!-- 查询条件 -->
-							<form method="post" id="searchForm"
+							<!-- <form method="post" id="searchForm"
 								action="/aihudong-duoping-web/screen/showAllScreen">
 								<div class="row">
-									<c:if test="${admin.power!=1 }">
 									<div class="col-sm-2">
 										<div class="dataTables_length">
 											<a href="/aihudong-duoping-web/screen/toUpdateScreen"
 												class="btn btn-primary ">新增屏幕</a>
 										</div>
 									</div>
-									</c:if>
-									<div class="col-sm-10">
-										<div class="input-group">
-											<select class="form-control m-b" onchange="changeZone(this)" name="room.building.zone.id">
-												<option value="">--请选择--</option>
-												<c:forEach items="${zoneList }" var="zone">
-													<option value="${zone.id}"
-														${zone.id==screen.room.building.zone.id ? 'selected' : '' }>${zone.zoneName }</option>
-												</c:forEach>
-											</select>
-										</div>
-										<div class="input-group">
-											<select id="buildingSelected" class="form-control m-b"
-												onchange="changeBuilding(this)" name="room.building.id">
-												<option value="">--请选择--</option>
-												<c:forEach items="${zoneList }" var="zone">
-													<c:if test="${zone.id==screen.room.building.zone.id }"></c:if>
-													<c:forEach items="${zone.buildingList }" var="building">
-														<option value="${building.id}"
-															${building.id==screen.room.building.id ? 'selected' : '' }>${building.buildingName }</option>
-													</c:forEach>
-												</c:forEach>
-											</select>
-										</div>
-
-										<div class="input-group">
-											<select id="roomSelected" class="form-control m-b"
-												name="roomId">
-												<option value="">--请选择--</option>
-												<c:forEach items="${zoneList }" var="zone">
-													<c:if test="${zone.id==screen.room.building.zone.id }"></c:if>
-													<c:forEach items="${zone.buildingList }" var="building">
-														<c:if test="${building.id==screen.room.building.id}">
-															<c:forEach items="${building.roomList }" var="room">
-																<c:if test="${room.id==screen.roomId }">
-																	<option value="${room.id}"
-																		${room.id==screen.roomId ? 'selected' : '' }>${room.num }</option>
-																</c:if>
-															</c:forEach>
-														</c:if>
-													</c:forEach>
-												</c:forEach>
-											</select>
-										</div>
-
-										<div class="input-group" style="float: right;">
-											<!-- 关键字 -->
-											<input type="text" name="duration"
-												value="${screen.duration }" class="form-control"
-												placeholder="关键字查找">
-											<div class="input-group-btn">
-												<input type="submit" class="btn btn-primary" value="搜索">
-											</div>
-										</div>
-									</div>
 								</div>
-							</form>
+							</form> -->
 							<!-- 查询条件结束 -->
-							<c:if test="${admin.power==0 }">
-								<form method="POST" enctype="multipart/form-data" id="form1"
-									action="/aihudong-duoping-web/screen/uploadScreenExcel">
-									<table>
-										<tr>
-											<!-- <td><label for="upfile" class="btn btn-success">Excel批量导入</label></td>
-											<td><input id="upfile" type="file" name="upfile"
-												class="btn btn-info" style="display: none"></td>
-											<td><input type="submit" value="提交"
-												onclick="return checkData()" class="btn btn-primary"></td> -->
-											<td><a href="/aihudong-duoping-web/screen/exportExcel" class="btn btn-success">Excel批量导出</a></td>
-										</tr>
-									</table>
-								</form>
-							</c:if>
 							<table
 								class="table table-striped table-bordered table-hover dataTables-example">
 								<thead>
@@ -177,39 +106,6 @@
 
 </body>
 <script type="text/javascript">
-function changeZone(object){
-	$.ajax({
-		url:"/aihudong-duoping-web/screen/getZone",
-		data:"id="+object.value,
-		type:"post",
-		success:function(data){
-			$("#buildingSelected").empty();
-			$("#roomSelected").empty();
-			$("#roomSelected").append("<option value=''>---请选择---</option>");
-			$("#buildingSelected").append("<option value=''>---请选择---</option>");
-			for(var i=0;i<data.length;i++){
-				if(data[i].zoneId==object.value){
-					$("#buildingSelected").append("<option value='"+data[i].id+"'>"+data[i].buildingName+"</option>");
-				}
-			}
-		}
-	})
-}
-function changeBuilding(object){
-	$.ajax({
-		url:"/aihudong-duoping-web/screen/getRoom",
-		data:"id="+object.value,
-		type:"post",
-		success:function(data){
-			$("#roomSelected").empty();
-			$("#roomSelected").append("<option value=''>---请选择---</option>");
-			for(var i=0;i<data.length;i++){
-				$("#roomSelected").append("<option value='"+data[i].id+"'>"+data[i].num+"</option>");
-			}
-		}
-	})
-}
-
 //JS校验form表单信息  
 function checkData(){  
    var fileDir = $("#upfile").val();  

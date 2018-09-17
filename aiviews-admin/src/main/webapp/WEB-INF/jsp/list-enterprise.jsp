@@ -65,7 +65,7 @@
 			                                 <td>
 			                                 	<a href="/aiviews-admin/enterprise/showEnterpriseDetail?id=${enterprise.id }"><i style="margin-left:5px;" class="fa fa-eye"></i></a>
 			                                 	<a href="/aiviews-admin/enterprise/toEditEnterprise?id=${enterprise.id }"><i style="margin-left:5px;" class="fa fa-edit"></i></a>
-			                                 	<a href="javascript:;" onclick="deleteStudent('${student.id }')"><i style="margin-left:5px;" class="fa fa-trash"></i></a>
+			                                 	<a href="javascript:;" onclick="deleteEnterprise('${enterprise.id }')"><i style="margin-left:5px;" class="fa fa-trash"></i></a>
 			                                 </td>
 		                            	</tr>
 		                            </c:forEach>
@@ -87,7 +87,24 @@
 
 </body>
 <script type="text/javascript">
-
+	function deleteEnterprise(){
+		var f=window.confirm("你确定要删除该项吗？");
+		if(f){
+			$.ajax({
+				url:"/aiviews-admin/enterprise/deleteEnterprise",
+				data:"id="+id,
+				type:"post",
+				success:function(data){
+					if(data=='success'){
+						alert("操作成功！");
+						window.location="/aiviews-admin/enterprise/selectAllEnterprise";
+					}else{
+						alert("操作失败");
+					}
+				}
+			})
+		}
+	}
 
 </script>
 </html>

@@ -39,4 +39,10 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 		return enterpriseMapper.selectAllEnterprise(enterprise);
 	}
 
+	@Override
+	public int deleteByPrimaryKey(Enterprise enterprise) {
+		// TODO Auto-generated method stub
+		return enterpriseMapper.deleteByPrimaryKey(enterprise.getId());
+	}
+
 }

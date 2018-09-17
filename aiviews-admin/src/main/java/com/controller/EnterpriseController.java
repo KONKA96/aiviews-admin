@@ -1,12 +1,21 @@
 package com.controller;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,6 +42,11 @@ import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("/enterprise")
+/**
+ * 
+ * @author KONKA
+ *
+ */
 public class EnterpriseController {
 
 	protected Logger logger = Logger.getLogger(this.getClass());
@@ -44,6 +58,7 @@ public class EnterpriseController {
 	
 	/**
 	 * 查询所有企业
+	 * @author KONKA
 	 * @param enterprise
 	 * @param modelMap
 	 * @return
@@ -69,7 +84,12 @@ public class EnterpriseController {
 	@RequestMapping("/showEnterpriseDetail")
 	public String showEnterpriseDetail(Enterprise enterprise,HttpSession session) {
 		enterprise=enterpriseService.selectByPrimaryKey(enterprise);
-		
+		Subject subject = SecurityUtils.getSubject();
+		String url="/aihudong-duoping-web/aiviews/adminLogin";
+		url=enterprise.getRealmName()+url;
+		String params="username="+subject.getPrincipal();
+		String httpsRequest = HttpsUtil.httpsRequest(url, "GET", params);
+		logger.info(subject.getPrincipal()+"登录"+enterprise.getRealmName()+"后台管理系统");
 		session.setAttribute("enterprise", enterprise);
 		return "index";
 	}
@@ -106,6 +126,20 @@ public class EnterpriseController {
 			}
 		}
 		
+		return "";
+	}
+	
+	/**
+	 * 删除企业
+	 * @param enterprise
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/deleteEnterprise")
+	public String deleteEnterprise(Enterprise enterprise) {
+		if(enterpriseService.deleteByPrimaryKey(enterprise)>0) {
+			return "success";
+		}
 		return "";
 	}
 	
@@ -325,27 +359,77 @@ public class EnterpriseController {
 		return "/record/list-record";
 	}
 	
+	/**
+	 * 查询日志文件列表
+	 * @author KONKA
+	 * @param session
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping("/selectFile")
+	public String selectFile(HttpSession session,ModelMap modelMap) {
+		Enterprise enterprise=(Enterprise) session.getAttribute("enterprise");
+		
+		String url="/aihudong-duoping-web/aiviews/getFileList";
+		String params=null;
+		
+		if(enterprise!=null) {
+			url=enterprise.getRealmName()+url;
+			String httpsRequest = HttpsUtil.httpsRequest(url, "GET", params);
+			JSONObject jsonObject = JSONObject.fromObject(httpsRequest);
+			List<String> fileList = (List<String>) jsonObject.get("fileList");
+			modelMap.addAttribute("fileList", fileList);
+		}
+		return "/logFileList/list-logFile";
+	}
+	
+	/**
+	 * 下载日志文件
+	 * @param session
+	 * @param fileName
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody
 	@RequestMapping("/testHttpsFile")
-	public String testHttpsFile(HttpServletRequest request) throws Exception {
-		ServletContext servletContext = request.getServletContext();
-		String realPath = servletContext.getRealPath("/");
-		realPath = realPath.substring(0, realPath.lastIndexOf("\\"));
-		realPath = realPath.substring(0, realPath.lastIndexOf("\\"));
-		realPath = realPath.substring(0, realPath.lastIndexOf("\\"));
-		File file = new File(realPath+"\\"+"logs"+"\\"+"log.log");
-		String url="https://ys.51asj.com/aihudong-duoping-web/aiviews/testFile";
-		/*String sendPostWithFile = HttpsFileUtil.sendPostWithFile(url, file);
-		System.out.println(sendPostWithFile);*/
+	public String testHttpsFile(HttpSession session,String fileName) throws Exception {
+		Enterprise enterprise=(Enterprise) session.getAttribute("enterprise");
 		
-		//HttpsFileUtil.testFile(url, file);
+		String url="/aihudong-duoping-web/aiviews/testFile";
+		String params="&fileName="+fileName;
 		
-		try {  
-            FileTransferClient client = new FileTransferClient(); // 启动客户端连接  
-            client.sendFile(file); // 传输文件  
-        } catch (Exception e) {  
-            e.printStackTrace();  
-        } 
-		
-		return "";
+		if(enterprise!=null) {
+			url=enterprise.getRealmName()+url;
+			String httpsRequest = HttpsUtil.httpsRequest(url, "GET", params);
+			JSONObject jsonObject = JSONObject.fromObject(httpsRequest);
+			String title = (String) jsonObject.get("title");
+			List<String> content = (List<String>) jsonObject.get("content");
+			
+			File file = new File("D:\\FTCache/"+title);
+			FileOutputStream fos = new FileOutputStream(file);
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+			file.mkdirs();
+			for (String string : content) {
+				System.out.println(string);
+				bw.write(string);
+	            bw.newLine();
+			}
+		    bw.close();
+		}
+		/*
+		 * String sendPostWithFile = HttpsFileUtil.sendPostWithFile(url, file);
+		 * System.out.println(sendPostWithFile);
+		 */
+
+		// HttpsFileUtil.testFile(url, file);
+
+		/*try {
+			FileTransferClient client = new FileTransferClient(); // 启动客户端连接
+			client.sendFile(file); // 传输文件
+		} catch (Exception e) {
+			e.printStackTrace();
+		}*/
+
+		return "success";
 	}
 }

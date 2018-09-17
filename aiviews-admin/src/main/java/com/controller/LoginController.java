@@ -1,5 +1,7 @@
 package com.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -11,11 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.model.Admin;
+import com.model.Enterprise;
 import com.model.Logger;
 import com.service.AdminService;
 
 @Controller
 @RequestMapping("/login")
+/**
+ * 
+ * @author KONKA
+ *
+ */
 public class LoginController {
 	
 	@Autowired
@@ -64,6 +72,17 @@ public class LoginController {
 	@RequestMapping("/toIndex")
 	public String toIndex() {
 		return "index";
+	}
+	
+	/**
+	 * 清除企业session
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("/enterpriseLogout")
+	public String enterpriseLogout(HttpSession session) {
+		session.removeAttribute("enterprise");
+		return "redirect:/enterprise/selectAllEnterprise";
 	}
 
 }

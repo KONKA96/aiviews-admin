@@ -13,5 +13,7 @@ public interface EnterpriseService {
     int updateByPrimaryKeySelective(Enterprise enterprise);
     
     List<Enterprise> selectAllEnterprise(Enterprise enterprise);
+    
+    int deleteByPrimaryKey(Enterprise enterprise);
 
 }
