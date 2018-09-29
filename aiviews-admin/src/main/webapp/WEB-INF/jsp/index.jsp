@@ -214,7 +214,7 @@
                 <a href="/aiviews-admin/login/enterpriseLogout" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
             </div>
             <div class="row J_mainContent" id="content-main">
-                <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="/aiviews-admin/enterprise/selectTeacher" frameborder="0" data-id="index_v1.html" seamless></iframe>
+                <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="/aiviews-admin/login/getEchartData" frameborder="0" data-id="index_v1.html" seamless></iframe>
            		<%-- <c:if test="${admin.power==1 }">
                 	<iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="/aihudong-duoping-web/yiji/toAdminIndex" frameborder="0" data-id="index_v1.html" seamless></iframe>
            		</c:if> --%>

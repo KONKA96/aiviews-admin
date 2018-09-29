@@ -74,6 +74,11 @@ public class LoginController {
 		return "index";
 	}
 	
+	@RequestMapping("/getEchartData")
+	public String getEchartData() {
+		return "echarts-data";
+	}
+	
 	/**
 	 * 清除企业session
 	 * @param session
